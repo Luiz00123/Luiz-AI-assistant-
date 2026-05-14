@@ -1,6 +1,14 @@
+import os
 from flask import Flask, request, jsonify
+from openai import OpenAI
 
 app = Flask(__name__)
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+messages = [
+    {"role": "system", "content": "You are Luiz 🧸, a smart, funny AI assistant like ChatGPT. Do not repeat user input. Answer naturally."}
+]
 
 @app.route("/")
 def home():
@@ -10,8 +18,14 @@ def home():
 def chat():
     user = request.json["message"]
 
-    reply = f"Luiz 🧸: umeandika -> {user}"
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=messages + [{"role": "user", "content": user}]
+    )
 
-    return jsonify({"reply": reply})
+    ai = response.choices[0].message.content
 
-if __name__ =
+    return jsonify({"reply": ai})
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
