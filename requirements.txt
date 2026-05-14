@@ -1,5 +1,2 @@
 flask
-HEAD
 openai
-openai==1.3.7
- 0f20b62 (upgrade Luiz AI to ChatGPT brain)
