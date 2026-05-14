@@ -1,37 +1,48 @@
-import os
 from flask import Flask, request, jsonify
-from openai import OpenAI
 
 app = Flask(__name__)
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-
 @app.route("/")
 def home():
-    return open("index.html", encoding="utf-8").read()
+    return open("index.html").read()
 
 @app.route("/chat", methods=["POST"])
 def chat():
-    user = request.json.get("message")
+    user = request.json["message"]
 
-    try:
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[
-                {
-                    "role": "system",
-                    "content": "You are Luiz 🧸, a smart, friendly AI assistant. You respond naturally, not by repeating user text. Be helpful, short, and clear."
-                },
-                {"role": "user", "content": user}
-            ]
-        )
+    # SIMPLE AI BRAIN (NO OPENAI = NO ERRORS)
+    reply = smart_brain
 
-        reply = response.choices[0].message.content
+def smart_brain(text):
+    text = text.lower()
 
-    except Exception as e:
-        reply = f"Error: {str(e)}"
-
-    return jsonify({"reply": reply})
+    if "hello" in text or "hi" in text:
+        return "👋 Hey! Mimi ni Luiz 🧸 niko live sasa!"
+    elif "how are you" in text:
+        return "😊 Niko fresh kabisa, niko Render live!"
+    elif "name" in text:
+        return "🤖 Mimi ni Luiz AI 🧸"
+    elif "love" in text:
+        return "💙 Nimeundwa kuwa rafiki yako Luiz Vad"
+    elif "bye" in text:
+        return "👋 Tutaonana tena!"
+    else:
+        return f"🧠 Nimepokea: {text} (Luiz bado naendelea kujifunza)"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+def smart_brain(text):
+    text = text.lower()
+
+    if "hello" in text or "hi" in text:
+        return "👋 Hey! Mimi ni Luiz 🧸 niko live!"
+    elif "how are you" in text:
+        return "😊 Niko fresh kabisa!"
+    elif "name" in text:
+        return "🤖 Mimi ni Luiz AI 🧸"
+    elif "love" in text:
+        return "💙 Nimeundwa kuwa rafiki yako Luiz Vad"
+    elif "bye" in text:
+        return "👋 Tutaonana!"
+    else:
+        return f"🧠 Nimepokea: {text}"
