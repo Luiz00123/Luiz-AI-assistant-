@@ -1,3 +1,9 @@
+from flask import Flask, request, jsonify
+from openai import OpenAI
+import os
+
+app = Flask(__name__)
+
 client = OpenAI(
     api_key=os.getenv("DEEPSEEK_API_KEY"),
     base_url="https://api.deepseek.com"
@@ -5,39 +11,26 @@ client = OpenAI(
 
 @app.route("/")
 def home():
-    return open("index.html", encoding="utf-8").read()
+    return "Luiz AI 🧸 is running!"
 
-
-def smart_brain(text):
+def brain(text):
     try:
-        response = client.chat.completions.create(
+        res = client.chat.completions.create(
             model="deepseek-chat",
             messages=[
-                {
-                    "role": "system",
-                    "content": "You are Luiz AI 🧸. Be natural, funny, smart, and speak Swahili + English like a human."
-                },
-                {
-                    "role": "user",
-                    "content": text
-                }
-            ],
-            temperature=0.8
+                {"role": "system", "content": "You are Luiz AI 🧸 funny Swahili-English assistant."},
+                {"role": "user", "content": text}
+            ]
         )
-
-        return response.choices[0].message.content
-
-    except Exception:
-        return "😅 Nimeitwa kidogo, nitarudi baadae."
-
+        return res.choices[0].message.content
+    except Exception as e:
+        return "😅 nimeitwa kidogo, kwaheri"
 
 @app.route("/chat", methods=["POST"])
 def chat():
     data = request.get_json()
-    user = data.get("message", "")
-    return jsonify({"reply": smart_brain(user)})
-
+    msg = data.get("message", "")
+    return jsonify({"reply": brain(msg)})
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=5000)
