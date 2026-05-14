@@ -9,6 +9,33 @@ def home():
 
 def smart_brain(text):
     text = text.lower()
+    def smart_brain(text):
+
+    text_lower = text.lower()
+
+    if any(word in text_lower for word in ["hello", "hi", "hey"]):
+        return "👋 Hey mkuu! Mimi ni Luiz AI 🧸"
+
+    elif "your name" in text_lower or "who are you" in text_lower:
+        return "🤖 Mimi ni Luiz AI 🧸, AI assistant wa Luiz Vad."
+
+    elif "who made you" in text_lower:
+        return "😎 Nilitengenezwa na Luiz Vad akiwa na stress lakini hakukata tamaa."
+
+    elif "swahili" in text_lower:
+        return "🇹🇿 Ndiyo! Naongea Kiswahili vizuri sana mkuu 😁"
+
+    elif "how are you" in text_lower:
+        return "😂 Niko poa sana leo."
+
+    elif "joke" in text_lower:
+        return "😂 Programmer mmoja aliomba mapenzi... akapewa bugs."
+
+    elif "bye" in text_lower:
+        return "👋 Tutaonana tena mkuu."
+
+    else:
+        return f"🧠 Bado najifunza... lakini nimeelewa: '{text}' 😁"
 
     if "hello" in text or "hi" in text or "hey" in text:
         funny = [
