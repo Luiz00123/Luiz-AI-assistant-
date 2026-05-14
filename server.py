@@ -4,7 +4,6 @@ import os
 
 app = Flask(__name__)
 
-# DeepSeek / OpenAI compatible client
 client = OpenAI(
     api_key=os.getenv("DEEPSEEK_API_KEY"),
     base_url="https://api.deepseek.com"
@@ -15,44 +14,34 @@ def home():
     return open("index.html", encoding="utf-8").read()
 
 
-def smart_brain(user_text):
-
+def smart_brain(text):
     try:
         response = client.chat.completions.create(
             model="deepseek-chat",
             messages=[
                 {
                     "role": "system",
-                    "content": (
-                        "You are Luiz AI 🧸. "
-                        "You are a friendly, funny, intelligent assistant. "
-                        "You speak natural Swahili and English like a real human. "
-                        "Avoid repeating user input. Always respond naturally, short or medium length. "
-                        "You can joke, explain, and help with coding or daily questions."
-                    )
+                    "content": "You are Luiz AI 🧸. Be natural, funny, smart, and speak Swahili + English like a human."
                 },
                 {
                     "role": "user",
-                    "content": user_text
+                    "content": text
                 }
             ],
-            temperature=0.9
+            temperature=0.8
         )
 
         return response.choices[0].message.content
 
-    except Exception as e:
-        return "😅 Nimepata error kidogo, jaribu tena baadaye."
+    except Exception:
+        return "😅 Nimeitwa kidogo, nitarudi baadae."
 
 
 @app.route("/chat", methods=["POST"])
 def chat():
     data = request.get_json()
     user = data.get("message", "")
-
-    reply = smart_brain(user)
-
-    return jsonify({"reply": reply})
+    return jsonify({"reply": smart_brain(user)})
 
 
 if __name__ == "__main__":
