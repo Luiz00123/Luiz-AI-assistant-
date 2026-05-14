@@ -1,10 +1,5 @@
-from openai import OpenAI
-import os
-
-app = Flask(__name__)
-
 client = OpenAI(
-    api_key=os.getenv("sk-276c0f361b904c0dada5cdc2d555c91f"),
+    api_key=os.getenv("DEEPSEEK_API_KEY"),
     base_url="https://api.deepseek.com"
 )
 
