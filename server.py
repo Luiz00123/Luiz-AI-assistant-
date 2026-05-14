@@ -1,11 +1,10 @@
-from flask import Flask, request, jsonify
 from openai import OpenAI
 import os
 
 app = Flask(__name__)
 
 client = OpenAI(
-    api_key=os.getenv("DEEPSEEK_API_KEY"),
+    api_key=os.getenv("sk-276c0f361b904c0dada5cdc2d555c91f"),
     base_url="https://api.deepseek.com"
 )
 
