@@ -11,7 +11,8 @@ def chat():
     user = request.json["message"]
 
     # SIMPLE AI BRAIN (NO OPENAI = NO ERRORS)
-    reply = smart_brain
+    reply = smart_brain(user)
+    repl = fast_brain(user)
 
 def smart_brain(text):
     text = text.lower()
