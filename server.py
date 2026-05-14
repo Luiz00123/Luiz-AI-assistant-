@@ -20,7 +20,7 @@ def smart_brain(text):
         return "🤖 Mimi ni Luiz AI 🧸, AI assistant wa Luiz Vad."
 
     elif "who made you" in text_lower:
-        return "😎 Nilitengenezwa na Luiz Vad akiwa na stress lakini hakukata tamaa."
+        return "😎 Nilitengenezwa na Luiz Vad, mdogo mwenye akili nyingi"
 
     elif "swahili" in text_lower:
         return "🇹🇿 Ndiyo! Naongea Kiswahili vizuri sana mkuu 😁"
@@ -34,7 +34,43 @@ def smart_brain(text):
     elif "bye" in text_lower:
         return "👋 Tutaonana tena mkuu."
 
-    else:
+    def smart_brain(text):
+
+        text_lower = text.lower()
+
+            greetings = ["hello", "hi", "hey", "mambo", "oya"]
+                english = ["english", "speak english"]
+                    swahili = ["swahili", "kiswahili"]
+
+                        if any(word in text_lower for word in greetings):
+                                return "👋 Hey mkuu 😎 Niko live sasa. Leo tunafanya nini?"
+
+                                    elif "who made you" in text_lower:
+                                            return "🤖 Nilitengenezwa na Luiz Vad 🧸 akiwa na ndoto kubwa kuliko usingizi 😭🔥"
+
+                                                elif any(word in text_lower for word in english):
+                                                        return "🇬🇧 Yes of course 😎 I can speak English very well, mkuu."
+
+                                                            elif any(word in text_lower for word in swahili):
+                                                                    return "🇹🇿 Ndiyo 😁 Kiswahili ndiyo home language."
+
+                                                                        elif "haha" in text_lower or "lol" in text_lower:
+                                                                                return "😂😂 usinichekeshe sana mkuu, server inaweza kuzima."
+
+                                                                                    elif "how are you" in text_lower:
+                                                                                            return "😌 Niko poa sana. Render hajanikata leo."
+
+                                                                                                elif "what can you do" in text_lower:
+                                                                                                        return "🤖 Naweza ku-chat, kusaidia coding, kupiga story, na kujifunza kidogo kidogo 😎"
+
+                                                                                                            elif "love" in text_lower:
+                                                                                                                    return "🧸 Mapenzi ni tricky mkuu 😭"
+
+                                                                                                                        elif "bye" in text_lower:
+                                                                                                                                return "👋 Sawa mkuu. Usinipotee tena 😎"
+
+                                                                                                                                    else:
+                                                                                                                                            return f"🧠 Hmm... '{text}'? Hiyo interesting kidogo 😅"else:
         return f"🧠 Bado najifunza... lakini nimeelewa: '{text}' 😁"
 
     if "hello" in text or "hi" in text or "hey" in text:
