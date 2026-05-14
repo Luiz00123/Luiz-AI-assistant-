@@ -1,28 +1,78 @@
 <!DOCTYPE html>
 <html>
-<body style="background:#111;color:white;font-family:Arial">
+<head>
+    <title>Luiz AI 🧸</title>
+    <style>
+        body {
+            background: #111;
+            color: white;
+            font-family: Arial;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
 
-<h2>🤖 Luiz AI</h2>
+        #chat {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #333;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 70%;
+            padding: 10px;
+        }
+
+        button {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .user {
+            color: #4fc3f7;
+        }
+
+        .bot {
+            color: #81c784;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>🤖 Luiz AI 🧸</h2>
 
 <div id="chat"></div>
 
-<input id="input">
+<input id="input" placeholder="Type message...">
 <button onclick="send()">Send</button>
 
 <script>
 async function send(){
     let text = document.getElementById("input").value;
-    document.getElementById("chat").innerHTML += "<p>You: "+text+"</p>";
+
+    if(!text) return;
+
+    document.getElementById("chat").innerHTML += "<p class='user'>You: " + text + "</p>";
+
+    document.getElementById("input").value = "";
 
     let res = await fetch("/chat", {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({message:text})
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({message: text})
     });
 
     let data = await res.json();
 
-    document.getElementById("chat").innerHTML += "<p>Luiz: "+data.reply+"</p>";
+    document.getElementById("chat").innerHTML += "<p class='bot'>Luiz 🧸: " + data.reply + "</p>";
+
+    document.getElementById("chat").scrollTop = 999999;
 }
 </script>
 
