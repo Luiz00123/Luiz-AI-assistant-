@@ -4,46 +4,58 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return open("index.html").read()
+    return open("index.html", encoding="utf-8").read()
+
+
+def smart_brain(text):
+    text = text.lower()
+
+    if "hello" in text or "hi" in text or "hey" in text:
+        funny = [
+            "👋 Oyaa, Luiz 🧸 nimeamka. Ulinimiss?",
+            "😂 Finally umeongea. Nilidhani umenisusa.",
+            "🧸 Hey mkuu. Niko hapa, sina likizo."
+        ]
+        return funny[hash(text) % len(funny)]
+
+    elif "how are you" in text:
+        return "😂 Niko fresh. Render hajanikata leo."
+
+    elif "name" in text:
+        return "🤖 Mimi ni Luiz AI 🧸, mtoto wa code zako."
+
+    elif "love" in text:
+        return "🧸 Love? Tulianza mapema leo 😏"
+
+    elif "bye" in text:
+        return "👋 Sawa, usinipotee tena."
+
+    elif "joke" in text:
+        return "😂 Kwa nini programmer aliacha girlfriend? Alikuwa ana too many bugs."
+
+    elif "who made you" in text:
+        return "🧸 Luiz Vad alinijenga akiwa na stress nyingi lakini alinishinda 😎"
+
+    else:
+        replies = [
+            f"🧠 Hmm... '{text}'? Hiyo imenifanya nicheke kidogo 😂",
+            f"🧸 Nimekusikia: {text}",
+            f"😏 Sawa mkuu, '{text}' noted."
+        ]
+        return replies[hash(text) % len(replies)]
+
 
 @app.route("/chat", methods=["POST"])
 def chat():
-    user = request.json["message"]
-
-    # SIMPLE AI BRAIN (NO OPENAI = NO ERRORS)
+    data = request.get_json()
+    user = data["message"]
     reply = smart_brain(user)
-    repl = fast_brain(user)
 
-def smart_brain(text):
-    text = text.lower()
+    return jsonify({"reply": reply})
 
-    if "hello" in text or "hi" in text:
-        return "👋 Hey! Mimi ni Luiz 🧸 niko live sasa!"
-    elif "how are you" in text:
-        return "😊 Niko fresh kabisa, niko Render live!"
-    elif "name" in text:
-        return "🤖 Mimi ni Luiz AI 🧸"
-    elif "love" in text:
-        return "💙 Nimeundwa kuwa rafiki yako Luiz Vad"
-    elif "bye" in text:
-        return "👋 Tutaonana tena!"
-    else:
-        return f"🧠 Nimepokea: {text} (Luiz bado naendelea kujifunza)"
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
-def smart_brain(text):
-    text = text.lower()
+import os
 
-    if "hello" in text or "hi" in text:
-        return "👋 Hey! Mimi ni Luiz 🧸 niko live!"
-    elif "how are you" in text:
-        return "😊 Niko fresh kabisa!"
-    elif "name" in text:
-        return "🤖 Mimi ni Luiz AI 🧸"
-    elif "love" in text:
-        return "💙 Nimeundwa kuwa rafiki yako Luiz Vad"
-    elif "bye" in text:
-        return "👋 Tutaonana!"
-    else:
-        return f"🧠 Nimepokea: {text}"
+port = int(os.environ.get("PORT", 5000))
+
+app.run(host="0.0.0.0", port=port)

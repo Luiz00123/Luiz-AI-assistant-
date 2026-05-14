@@ -1,78 +1,138 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Luiz AI 🧸</title>
-    <style>
-        body {
-            background: #111;
-            color: white;
-            font-family: Arial;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Luiz AI 🧸</title>
 
-        #chat {
-            width: 100%;
-            max-width: 600px;
-            height: 400px;
-            overflow-y: auto;
-            border: 1px solid #333;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
+<style>
+body{
+background:#0f172a;
+font-family:Arial;
+margin:0;
+color:white;
+display:flex;
+justify-content:center;
+height:100vh;
+}
 
-        input {
-            width: 70%;
-            padding: 10px;
-        }
+.chatbox{
+width:100%;
+max-width:800px;
+display:flex;
+flex-direction:column;
+height:100vh;
+}
 
-        button {
-            padding: 10px;
-            cursor: pointer;
-        }
+.header{
+padding:20px;
+font-size:24px;
+font-weight:bold;
+background:#111827;
+border-bottom:1px solid #333;
+}
 
-        .user {
-            color: #4fc3f7;
-        }
+#chat{
+flex:1;
+overflow:auto;
+padding:20px;
+}
 
-        .bot {
-            color: #81c784;
-        }
-    </style>
+.msg{
+margin:12px 0;
+padding:14px;
+border-radius:18px;
+max-width:75%;
+animation:fade .25s ease;
+}
+
+.user{
+background:#2563eb;
+margin-left:auto;
+}
+
+.bot{
+background:#1e293b;
+}
+
+.inputArea{
+display:flex;
+padding:15px;
+background:#111827;
+}
+
+input{
+flex:1;
+padding:14px;
+border:none;
+border-radius:14px;
+font-size:16px;
+outline:none;
+}
+
+button{
+margin-left:10px;
+padding:14px 22px;
+border:none;
+border-radius:14px;
+background:#2563eb;
+color:white;
+cursor:pointer;
+font-weight:bold;
+}
+
+button:hover{
+opacity:.9;
+}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(10px);}
+to{opacity:1;transform:translateY(0);}
+}
+</style>
 </head>
 
 <body>
 
-<h2>🤖 Luiz AI 🧸</h2>
+<div class="chatbox">
+
+<div class="header">🤖 Luiz AI 🧸</div>
 
 <div id="chat"></div>
 
+<div class="inputArea">
 <input id="input" placeholder="Type message...">
 <button onclick="send()">Send</button>
+</div>
+
+</div>
 
 <script>
 async function send(){
-    let text = document.getElementById("input").value;
 
-    if(!text) return;
+let input=document.getElementById("input");
+let text=input.value;
 
-    document.getElementById("chat").innerHTML += "<p class='user'>You: " + text + "</p>";
+if(!text)return;
 
-    document.getElementById("input").value = "";
+document.getElementById("chat").innerHTML +=
+`<div class="msg user">You: ${text}</div>`;
 
-    let res = await fetch("/chat", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({message: text})
-    });
+input.value="";
 
-    let data = await res.json();
+let res=await fetch("/chat",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({message:text})
+});
 
-    document.getElementById("chat").innerHTML += "<p class='bot'>Luiz 🧸: " + data.reply + "</p>";
+let data=await res.json();
 
-    document.getElementById("chat").scrollTop = 999999;
+document.getElementById("chat").innerHTML +=
+`<div class="msg bot">${data.reply}</div>`;
+
+document.getElementById("chat").scrollTop=
+document.getElementById("chat").scrollHeight;
 }
 </script>
 
