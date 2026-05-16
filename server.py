@@ -5,8 +5,7 @@ import os
 app = Flask(__name__)
 
 client = OpenAI(
-    api_key=os.getenv("DEEPSEEK_API_KEY"),
-    base_url="https://api.deepseek.com"
+    api_key=os.getenv("OPENAI_API_KEY")
 )
 
 @app.route("/")
@@ -16,7 +15,7 @@ def home():
 def brain(text):
     try:
         res = client.chat.completions.create(
-            model="deepseek-chat",
+            model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are Luiz AI 🧸 funny Swahili-English assistant."},
                 {"role": "user", "content": text}
