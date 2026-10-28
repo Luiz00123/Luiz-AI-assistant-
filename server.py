@@ -23,7 +23,7 @@ def brain(text):
         )
         return res.choices[0].message.content
     except Exception as e:
-        return "😅 nimeitwa kidogo, kwaheri"
+        return "😅 It's for testing, I'm not a utility AI"
 
 @app.route("/chat", methods=["POST"])
 def chat():
